@@ -4,6 +4,7 @@ import List from "./List";
 const TodoList = () => {
   const [todo, setTodo] = useState([]);
   const [value, setValue] = useState("");
+  const [completed, setCompleted] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -23,9 +24,22 @@ const TodoList = () => {
     setValue(e.target.value);
   };
 
+  const toggleCompleted = e => {
+    setCompleted(!completed);
+    strike(e);
+  };
+
+  const strike = e => {
+    let todoValue = e.target;
+    console.log(todoValue);
+    return completed
+      ? (todoValue.style.textDecoration = "line-through")
+      : (todoValue.style.textDecoration = "none");
+  };
+
   return (
     <div>
-      <List todo={todo} />
+      <List todo={todo} toggleComplete={toggleCompleted} />
       <form onSubmit={handleSubmit}>
         <input
           type="text"
